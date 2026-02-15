@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Resume Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="main-container">
+
+    <div class="card">
+        <h1>🚀 Smart Resume Analyzer</h1>
+        <p class="subtitle">AI-Powered Resume Matching System</p>
+
+        <form method="POST" enctype="multipart/form-data">
+            <div class="input-group">
+                <label>Upload Resume (PDF)</label>
+                <input type="file" name="resume" required>
+            </div>
+
+            <div class="input-group">
+                <label>Paste Job Description</label>
+                <textarea name="job_description" rows="6" required></textarea>
+            </div>
+
+            <button type="submit" class="analyze-btn">
+                Analyze Resume
+            </button>
+        </form>
+
+        {% if score is not none %}
+        <div class="results">
+            <div class="score-box">
+                <h2>Match Score</h2>
+                <div class="score">{{ score }}%</div>
+            </div>
+
+            {% if matched_skills %}
+            <div class="skills-section">
+                <h3>✅ Matched Skills</h3>
+                <div class="skills">
+                    {% for skill in matched_skills %}
+                        <span class="badge matched">{{ skill }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if missing_skills %}
+            <div class="skills-section">
+                <h3>⚠ Missing Skills</h3>
+                <div class="skills">
+                    {% for skill in missing_skills %}
+                        <span class="badge missing">{{ skill }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+</div>
+
+</body>
+</html>
